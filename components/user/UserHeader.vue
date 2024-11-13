@@ -9,22 +9,31 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { RouterLink, useRouter } from "vue-router";
+import { onMounted, ref } from "vue";
+
 const router = useRouter();
 const status = ref("Login");
+const isAuthenticated = ref(false);
 
 const checkToken = () => {
-  const switcher = localStorage.getItem("elearn-token");
-  status.value = switcher ? "Logout" : "Login";
+  const token = localStorage.getItem("elearn-token");
+  isAuthenticated.value = !!token;
+  status.value = token ? "Logout" : "Login";
 };
+
 onMounted(checkToken);
 
 const handleAuthAction = () => {
   if (status.value === "Logout") {
+    // Logout logic
     localStorage.removeItem("elearn-token");
+    isAuthenticated.value = false;
     router.push("/");
     status.value = "Login";
   } else {
-    router.push("/login");
+    if (!isAuthenticated.value) {
+      router.push("/login");
+    }
   }
 };
 </script>
@@ -68,11 +77,20 @@ const handleAuthAction = () => {
       </div>
 
       <div class="flex items-center space-x-4">
-        <MenubarMenu>
+        <!-- Conditionally render Profile if authenticated -->
+        <MenubarMenu v-if="isAuthenticated">
+          <RouterLink to="/profile">
+            <MenubarTrigger>Profile</MenubarTrigger>
+          </RouterLink>
+        </MenubarMenu>
+
+        <!-- Conditionally render Sign Up if not authenticated -->
+        <MenubarMenu v-if="!isAuthenticated">
           <RouterLink to="/signup">
             <MenubarTrigger>Sign Up</MenubarTrigger>
           </RouterLink>
         </MenubarMenu>
+
         <MenubarMenu>
           <MenubarTrigger @click="handleAuthAction">{{
             status

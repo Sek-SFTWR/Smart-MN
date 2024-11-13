@@ -35,35 +35,30 @@ export default function useCourse() {
     error.value = null;
 
     try {
-      const { data, error: fetchError } = await useFetch<Course>(
-        `/courses/${course_id}`,
-        {
-          baseURL: apiBaseUrl,
-        }
-      );
-
-      if (fetchError.value) {
+      // Fetch course details
+      const courseResponse = await fetch(`${apiBaseUrl}/courses/${course_id}`);
+      if (!courseResponse.ok) {
         throw new Error(
-          fetchError.value.message || "Failed to fetch course details"
+          `Failed to fetch course details: ${courseResponse.statusText}`
         );
       }
 
-      course.value = data.value || null;
+      const courseData: Course = await courseResponse.json();
+      course.value = courseData;
 
       if (course.value) {
-        // Fetch teacher name if available
-        const { data: teacherData, error: teacherError } =
-          await useFetch<Teacher>(`/users/${course.value.teacher_id}`, {
-            baseURL: apiBaseUrl,
-          });
-
-        if (teacherError.value) {
+        // Fetch teacher's name if available
+        const teacherResponse = await fetch(
+          `${apiBaseUrl}/users/${course.value.teacher_id}`
+        );
+        if (!teacherResponse.ok) {
           throw new Error(
-            teacherError.value.message || "Failed to fetch teacher"
+            `Failed to fetch teacher: ${teacherResponse.statusText}`
           );
         }
 
-        course.value.teacher_name = teacherData.value?.username || "Unknown";
+        const teacherData: Teacher = await teacherResponse.json();
+        course.value.teacher_name = teacherData.username || "Unknown";
       }
     } catch (err) {
       if (err instanceof Error) {

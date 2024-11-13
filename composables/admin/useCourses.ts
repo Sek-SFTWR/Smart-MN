@@ -1,7 +1,5 @@
-import { baseURL } from "nuxt/dist/core/runtime/nitro/paths";
-
 import { ref } from "vue";
-import { useFetch } from "nuxt/app";
+
 const apiBaseUrl = "http://127.0.0.1:8000";
 
 interface Course {
@@ -31,22 +29,16 @@ export default function useCourses() {
     error.value = null;
 
     try {
-      const { data, error: fetchError } = await useFetch<Course[]>("/courses", {
-        baseURL: apiBaseUrl,
-      });
-      const res = await fetch({
-        url: `${apiBaseURL}/courses`,
-        method: "GET",
-      });
-      console.log(data);
-      console.log(error);
+      const response = await fetch(`${apiBaseUrl}/courses`);
 
-      if (fetchError.value) {
-        throw new Error(fetchError.value.message || "Failed to fetch courses");
+      if (!response.ok) {
+        throw new Error(`Failed to fetch courses: ${response.statusText}`);
       }
 
-      courses.value = data.value || [];
+      const data = await response.json();
+      courses.value = data || [];
 
+      // Fetch teacher names for each course
       for (const course of courses.value) {
         const { data: teacherData, error: teacherError } =
           await useFetch<Teacher>(`/users/${course.teacher_id}`, {
@@ -62,7 +54,6 @@ export default function useCourses() {
         course.teacher_name = teacherData.value?.username || "Unknown";
       }
     } catch (err) {
-      console.log(err);
       if (err instanceof Error) {
         error.value = err.message;
       } else {

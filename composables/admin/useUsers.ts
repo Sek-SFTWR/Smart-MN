@@ -19,16 +19,14 @@ export default function useUsers() {
     error.value = null;
 
     try {
-      const { data, error: fetchError } = await useFetch<User[]>("/users", {
-        baseURL: apiBaseUrl,
-      });
+      const response = await fetch(`${apiBaseUrl}/users`);
 
-      if (fetchError.value) {
-        throw new Error(fetchError.value.message || "Failed to fetch users");
+      if (!response.ok) {
+        throw new Error(`Failed to fetch users: ${response.statusText}`);
       }
 
-      users.value = data.value || [];
-      console.log(data.value);
+      const data = await response.json();
+      users.value = data || [];
       console.log("users:", users.value);
     } catch (err) {
       if (err instanceof Error) {

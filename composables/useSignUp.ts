@@ -11,7 +11,7 @@ interface SignUpData {
 }
 
 interface SignUpResponse {
-  message: string;
+  message?: string;
 }
 
 export default function useSignUp() {
@@ -26,25 +26,29 @@ export default function useSignUp() {
     successMessage.value = "";
 
     try {
-      const { data, error } = await useFetch<SignUpResponse>("/auth/register", {
+      const response = await fetch(`${apiBaseUrl}/auth/register`, {
         method: "POST",
-        baseURL: apiBaseUrl,
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(signUpData),
       });
 
-      if (error.value) {
-        throw new Error(error.value.message || "Sign up failed");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Sign up failed");
       }
 
-      successMessage.value = data.value?.message || "Sign up successful!";
+      const data: SignUpResponse | null = await response.json();
+
+      // Check if data is non-null and has a message, or use a default success message
+      successMessage.value = data?.message || "Sign up successful!";
 
       // Redirect to login page after successful signup
       await router.push({ path: "/login" });
     } catch (error) {
-      errorMessage.value = (error as Error).message;
+      errorMessage.value =
+        (error as Error).message || "An error occurred during sign-up";
     } finally {
       isLoading.value = false;
     }

@@ -35,7 +35,7 @@ const handleDelete = (courseId: number) => {
       <div
         v-for="course in courses"
         :key="course.course_id"
-        class="bg-white shadow-md rounded-lg p-4"
+        class="bg-white shadow-lg rounded-lg p-4"
       >
         <h2 class="text-xl font-semibold mb-2">{{ course.title }}</h2>
         <div
@@ -45,7 +45,7 @@ const handleDelete = (courseId: number) => {
           <img
             :src="`http://localhost:8000/${course.background_image}`"
             alt="Course Image"
-            class="w-full h-32 object-cover rounded-lg"
+            class="w-full h-64 object-cover rounded-md"
           />
         </div>
         <p class="text-gray-700 mb-2">{{ course.description }}</p>

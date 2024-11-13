@@ -23,7 +23,7 @@
         <RouterLink to="/courses">
           <Button size="lg" variant="secondary">Explore Courses</Button>
         </RouterLink>
-        <RouterLink to="/price">
+        <RouterLink to="/pricing">
           <Button size="lg" variant="default">View Pricing</Button>
         </RouterLink>
       </div>

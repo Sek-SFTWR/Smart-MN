@@ -15,7 +15,6 @@ onMounted(() => {
   fetchUsers();
 });
 
-// Watch for changes in the users array and log them
 watch(users, (newUsers) => {
   console.log("Users updated:", newUsers);
 });

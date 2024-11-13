@@ -31,71 +31,81 @@ const handleSignup = async () => {
 
 <template>
   <div
-    class="bg-white flex flex-col justify-center items-center rounded-lg p-8 max-w-md mx-auto shadow-lg m-9"
+    class="bg-gray-50 flex flex-col justify-center items-center min-h-screen px-4"
   >
-    <div class="flex flex-col justify-center items-center mb-8">
-      <div class="font-semibold text-3xl">Sign Up</div>
-      <div class="text-slate-900 text-md mt-2">
-        Create an account to get started!
+    <div
+      class="bg-white flex flex-col justify-center items-center rounded-lg p-10 max-w-lg w-full mx-auto shadow-lg space-y-6"
+    >
+      <div class="text-center mb-6">
+        <h1 class="font-bold text-3xl text-gray-800">Sign Up</h1>
+        <p class="text-gray-600 mt-2">Create an account to get started!</p>
+      </div>
+
+      <div class="w-full space-y-5">
+        <div>
+          <label class="block text-gray-700 text-md mb-1">Username</label>
+          <input
+            type="text"
+            v-model="username"
+            placeholder="Enter your username"
+            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+          />
+        </div>
+
+        <div>
+          <label class="block text-gray-700 text-md mb-1">Email</label>
+          <input
+            type="email"
+            v-model="email"
+            placeholder="Enter your email"
+            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+          />
+        </div>
+
+        <div>
+          <label class="block text-gray-700 text-md mb-1">Password</label>
+          <input
+            type="password"
+            v-model="password"
+            placeholder="Create a password"
+            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+          />
+        </div>
+
+        <div>
+          <label class="block text-gray-700 text-md mb-1"
+            >Confirm Password</label
+          >
+          <input
+            type="password"
+            v-model="confirmPassword"
+            placeholder="Confirm your password"
+            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+          />
+        </div>
+
+        <button
+          class="w-full bg-amber-500 text-white py-3 rounded-md hover:bg-amber-600 transition font-semibold"
+          @click="handleSignup"
+          :disabled="isLoading"
+        >
+          Sign Up
+        </button>
+      </div>
+
+      <div class="text-gray-700 text-md mt-6">
+        Already have an account?
+        <RouterLink to="/login" class="text-amber-500 hover:underline"
+          >Log in</RouterLink
+        >
+      </div>
+
+      <div v-if="errorMessage" class="text-red-600 mt-4">
+        {{ errorMessage }}
+      </div>
+      <div v-if="successMessage" class="text-green-600 mt-4">
+        {{ successMessage }}
       </div>
     </div>
-
-    <div class="w-full mb-4">
-      <label class="block text-slate-700 text-md mb-1">Username</label>
-      <input
-        type="text"
-        v-model="username"
-        placeholder="Enter your username"
-        class="w-full"
-      />
-    </div>
-
-    <div class="w-full mb-4">
-      <label class="block text-slate-700 text-md mb-1">Email</label>
-      <input
-        type="email"
-        v-model="email"
-        placeholder="Enter your email"
-        class="w-full"
-      />
-    </div>
-
-    <div class="w-full mb-4">
-      <label class="block text-slate-700 text-md mb-1">Password</label>
-      <input
-        type="password"
-        v-model="password"
-        placeholder="Create a password"
-        class="w-full"
-      />
-    </div>
-
-    <div class="w-full mb-6">
-      <label class="block text-slate-700 text-md mb-1">Confirm Password</label>
-      <input
-        type="password"
-        v-model="confirmPassword"
-        placeholder="Confirm your password"
-        class="w-full"
-      />
-    </div>
-
-    <button
-      class="w-full mb-4 bg-blue-500 text-white py-2 rounded"
-      @click="handleSignup"
-      :disabled="isLoading"
-    >
-      Sign Up
-    </button>
-
-    <div class="text-slate-900 text-md mt-4">
-      Already have an account?
-      <RouterLink to="/login" class="text-blue-600 hover:underline"
-        >Log in</RouterLink
-      >
-    </div>
-
-    <div v-if="errorMessage" class="text-red-600">{{ errorMessage }}</div>
-    <div v-if="successMessage" class="text-green-600">{{ successMessage }}</div>
   </div>
 </template>

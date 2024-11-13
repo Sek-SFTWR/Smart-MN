@@ -13,6 +13,7 @@ const { courses, isLoading, error, fetchCourses } = useCourses();
 
 onMounted(() => {
   fetchCourses();
+  console.log("Courses fetched", courses);
 });
 
 const handleUpdate = (courseId: number) => {
