@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     "nuxt-mdi",
     "radix-vue/nuxt",
     "@vue-api/nuxt",
+    "vuetify-nuxt-module",
   ],
   shadcn: {
     prefix: "",

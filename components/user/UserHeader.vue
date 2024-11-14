@@ -41,7 +41,7 @@ const handleAuthAction = () => {
 <template>
   <div class="w-full px-4 py-2 flex flex-col sticky top-0 z-50">
     <div
-      class="flex items-center justify-center m-0 p-2 bg-amber-500 text-slate-50 text-lg font-sans font-semibold rounded-md"
+      class="flex items-center justify-center m-0 p-2 bg-amber-500 text-slate-50 mb-2 text-lg font-sans font-semibold rounded-md"
     >
       Free Courses 🌟 Sale Ends Soon, Get It Now ->
     </div>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { HTMLAttributes } from 'vue'
 import { cn } from '@/lib/utils'
 
@@ -8,14 +8,12 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div
-    :class="
-      cn(
-        'rounded-lg border border-slate-200 bg-white text-slate-950 shadow-sm ',
-        props.class,
-      )
-    "
+  <span
+    role="link"
+    aria-disabled="true"
+    aria-current="page"
+    :class="cn('font-normal text-slate-950 dark:text-slate-50', props.class)"
   >
     <slot />
-  </div>
+  </span>
 </template>

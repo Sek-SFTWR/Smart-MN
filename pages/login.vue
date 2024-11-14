@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="bg-white flex flex-col justify-center items-center rounded-lg p-8 max-w-md mx-auto shadow-lg m-9"
-  >
+  <div class="bg-white flex flex-col justify-center items-center rounded-lg p-8 max-w-md mx-auto shadow-lg m-9">
     <div class="flex flex-col justify-center items-center mb-8">
       <div class="font-semibold text-3xl">Log In</div>
       <div class="text-slate-900 text-md mt-2">
@@ -16,6 +14,7 @@
         v-model="username"
         placeholder="Enter your username"
         class="w-full"
+        
       />
     </div>
 
@@ -26,10 +25,12 @@
         v-model="password"
         placeholder="Enter your password"
         class="w-full"
+        @keydown="handleKeydown"
       />
     </div>
 
-    <Button variant="secondary" class="w-full mb-4" @click="login">
+    <Button variant="secondary" class="w-full mb-4" @click="login"
+    @keydown.enter="login">
       Log In
     </Button>
 
@@ -49,7 +50,13 @@ definePageMeta({
 
 import { ref } from "vue";
 import { RouterLink } from "vue-router";
-// import useLogin from "~/composables/useLogin";
+import useLogin from "~/composables/useLogin";
 
 const { username, password, login } = useLogin();
+
+function handleKeydown(event: KeyboardEvent) {
+  if (event.key === 'Enter') {
+    login();
+  }
+}
 </script>

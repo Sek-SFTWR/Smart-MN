@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 const apiBaseUrl = "http://127.0.0.1:8000";
 
@@ -11,6 +11,23 @@ export default function useLogin() {
   const username = ref("");
   const password = ref("");
   const router = useRouter();
+
+  // Check token expiration on page load
+  onMounted(() => {
+    const token = localStorage.getItem("elearn-token");
+    if (token) {
+      const decodedToken = JSON.parse(atob(token.split(".")[1]));
+      const exp = decodedToken.exp * 1000;
+      const currentTime = new Date().getTime();
+      console.log("expiration time from backend sekv thes_:",exp)
+      console.log("current time : ", currentTime)
+      
+      if (exp <= currentTime) {
+        localStorage.removeItem("elearn-token");
+        router.push("/login");
+      }
+    }
+  });
 
   const login = async () => {
     try {
@@ -38,27 +55,11 @@ export default function useLogin() {
       const exp = decodedToken.exp * 1000;
       const currentTime = new Date().getTime();
 
-      const dateFormatter = new Intl.DateTimeFormat("en-US", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
-        hour12: true,
-      });
-
-      console.log("Debugging:", exp, currentTime);
       if (exp <= currentTime) {
         localStorage.removeItem("elearn-token");
         router.push("/login");
+        return; // Avoid further execution if the token is expired
       }
-
-      console.log("User Role:", userRole);
-      console.log("Decoded Token:", decodedToken);
-      console.log("Expiration Time:", dateFormatter.format(exp));
-      console.log("Current Time:", dateFormatter.format(currentTime));
 
       if (userRole === "admin") {
         router.push("/admin");
