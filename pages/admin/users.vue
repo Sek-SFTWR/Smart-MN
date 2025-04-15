@@ -3,7 +3,7 @@ definePageMeta({
   layout: "admin",
   middleware: "auth",
   requiresAuth: true,
-  requiresRole: ["admin"],
+  requiresRole: ["admin"]
 });
 
 import { onMounted, watch } from "vue";
@@ -30,18 +30,18 @@ const handleDelete = (userId: number) => {
 
 <template>
   <div class="p-4">
-    <h1 class="text-2xl font-semibold mb-4">Users</h1>
-    <div v-if="isLoading" class="text-center">Loading...</div>
+    <h1 class="text-2xl font-semibold mb-4">Хэрэглэгчид</h1>
+    <div v-if="isLoading" class="text-center">Ачаалж байна...</div>
     <div v-if="error" class="text-red-500">{{ error }}</div>
     <div v-if="!isLoading && !error" class="overflow-x-auto">
       <table class="min-w-full bg-white border border-gray-200">
         <thead class="bg-gray-100">
           <tr>
-            <th class="py-2 px-4 border-b text-center">ID</th>
-            <th class="py-2 px-4 border-b text-center">Username</th>
-            <th class="py-2 px-4 border-b text-center">Email</th>
-            <th class="py-2 px-4 border-b text-center">Role</th>
-            <th class="py-2 px-4 border-b text-center">Actions</th>
+            <th class="py-2 px-4 border-b text-center">Дугаар</th>
+            <th class="py-2 px-4 border-b text-center">Хэрэглэгчийн нэр</th>
+            <th class="py-2 px-4 border-b text-center">Имэйл</th>
+            <th class="py-2 px-4 border-b text-center">Үүрэг</th>
+            <th class="py-2 px-4 border-b text-center">Үйлдэл</th>
           </tr>
         </thead>
         <tbody>

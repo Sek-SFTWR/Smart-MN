@@ -50,10 +50,10 @@ export default function useAddCourse() {
       });
 
       if (error.value) {
-        throw new Error(error.value.message || "Failed to add course");
+        throw new Error(error.value.message || "Сургалт нэмэхэд алдаа гарлаа");
       }
 
-      successMessage.value = "Course added successfully!";
+      successMessage.value = "Cургалт амжилттай нэмэгдлээ!";
       // Optionally, redirect to another page after successful addition
       // await router.push({ path: "/admin/courses" });
     } catch (error) {

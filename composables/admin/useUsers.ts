@@ -22,7 +22,7 @@ export default function useUsers() {
       const response = await fetch(`${apiBaseUrl}/users`);
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch users: ${response.statusText}`);
+        throw new Error(`Хэрэглэгчийн мэдээлэл олдсонгүй : ${response.statusText}`);
       }
 
       const data = await response.json();

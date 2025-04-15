@@ -7,7 +7,10 @@ definePageMeta({
 });
 
 import { ref } from "vue";
-import useAddCourse from "@/composables/admin/useAddCourse"; // Adjust the path as needed
+import useAddCourse from "@/composables/admin/useAddCourse"; 
+import Alert from "@/components/ui/alert/Alert.vue";
+import AlertTitle from "@/components/ui/alert/AlertTitle.vue";
+import AlertDescription from "@/components/ui/alert/AlertDescription.vue";
 
 const { addCourse, isLoading, errorMessage, successMessage } = useAddCourse();
 
@@ -25,6 +28,22 @@ const handleAddCourse = async () => {
     price: price.value,
     image: image.value,
   });
+
+
+  title.value = "";
+  description.value = "";
+  teacher_id.value = 0;
+  price.value = 0;
+  image.value = null;
+
+  setTimeout(() => {
+    successMessage.value = "";
+    errorMessage.value = "";
+    
+  }, 3000);
+
+
+
 };
 
 const handleImageChange = (event: Event) => {
@@ -38,10 +57,22 @@ const handleImageChange = (event: Event) => {
 <template>
   <div class="p-4">
     <h1 class="text-2xl font-semibold mb-4">Add Course</h1>
-    <div v-if="errorMessage" class="text-red-500 mb-4">{{ errorMessage }}</div>
-    <div v-if="successMessage" class="text-green-500 mb-4">
-      {{ successMessage }}
+    <div v-if="errorMessage"> 
+       <Alert variant="destructive">
+        <AlertCircle class="w-4 h-4"/>
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>{{ errorMessage }}</AlertDescription>
+       </Alert>
     </div>
+    <div v-if="successMessage">
+       <Alert variant="default">
+        <AlertCircle class="w-4 h-4"/>
+        <AlertTitle>Success</AlertTitle>
+        <AlertDescription>{{ successMessage }}</AlertDescription>
+       </Alert>
+    </div>
+
+    
     <form @submit.prevent="handleAddCourse" class="space-y-4">
       <div>
         <label class="block text-gray-700">Title</label>

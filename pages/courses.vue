@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: "user",
+  layout: "user"
 });
 
 import { onMounted } from "vue";
@@ -25,8 +25,8 @@ const handleDelete = (courseId: number) => {
 
 <template>
   <div class="p-4">
-    <h1 class="text-2xl font-semibold mb-4">Courses</h1>
-    <div v-if="isLoading" class="text-center">Loading...</div>
+    <h1 class="text-2xl font-semibold mb-4">Хичээлүүд</h1>
+    <div v-if="isLoading" class="text-center">Ачаалж байна...</div>
     <div v-if="error" class="text-red-500">{{ error }}</div>
     <div
       v-if="!isLoading && !error"
@@ -45,14 +45,14 @@ const handleDelete = (courseId: number) => {
             class="w-full h-48 object-cover"
           />
         </div>
-        
+
         <!-- Course Title -->
         <div class="p-4">
           <h2 class="text-xl font-semibold mb-2">{{ course.title }}</h2>
           <p class="text-gray-700 mb-2">{{ course.description }}</p>
-          <p class="text-gray-500 mb-2">Teacher: {{ course.teacher_name }}</p>
-          <p class="text-gray-500 mb-2">Price: ${{ course.price }}</p>
-          
+          <p class="text-gray-500 mb-2">Багш: {{ course.teacher_name }}</p>
+          <p class="text-gray-500 mb-2">Үнэ: ${{ course.price }}</p>
+
           <!-- Action Buttons -->
           <div class="flex justify-end space-x-2">
             <button
@@ -60,7 +60,7 @@ const handleDelete = (courseId: number) => {
               class="bg-amber-500 text-white px-3 py-1 rounded hover:bg-amber-600 flex items-center"
             >
               <MdiIcon icon="mdiEyeOutline" size="24px" class="mr-1" />
-              View
+              view
             </button>
 
             <button
@@ -68,7 +68,7 @@ const handleDelete = (courseId: number) => {
               class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 flex items-center"
             >
               <MdiIcon icon="mdiDeleteOutline" size="24px" class="mr-1" />
-              Hide
+              hide
             </button>
           </div>
         </div>

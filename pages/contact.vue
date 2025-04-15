@@ -2,60 +2,100 @@
 definePageMeta({
   layout: "user",
 });
+
+import { ref } from 'vue';
+
+// Form data and validation
+const form = ref({
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  subject: '',
+  message: '',
+});
+
+const errors = ref({
+  firstName: '',
+  email: '',
+});
+
+const validateForm = () => {
+  errors.value.firstName = form.value.firstName ? '' : 'Нэр оруулах шаардлагатай.';
+  errors.value.email = form.value.email.includes('@') ? '' : 'Зөв имэйл оруулах шаардлагатай.';
+};
+
+const submitForm = () => {
+  validateForm();
+  if (!errors.value.firstName && !errors.value.email) {
+    // Submit logic here (e.g., API call)
+    alert('Таны мэдээллийг амжилттай илгээлээ!');
+  }
+};
 </script>
+
 <template>
   <div class="bg-gray-50 min-h-screen flex items-center justify-center">
     <div class="max-w-5xl w-full px-6 py-12 bg-white shadow-lg rounded-lg">
-      <h1 class="text-3xl font-bold text-gray-800 mb-6">Contact Us</h1>
+      <h1 class="text-3xl font-bold text-gray-800 mb-6">Холбоо барих</h1>
       <p class="text-gray-600 mb-8">
-        Welcome to SkillBridge's Pricing Plan page, where we offer two
-        comprehensive options to cater to your needs: Free and Pro. We believe
-        in providing flexible and affordable pricing options for our services.
-        Whether you’re an individual looking to enhance your skills or a
-        business seeking professional development solutions, we have a plan that
-        suits you. Explore our pricing options below and choose the one that
-        best fits your requirements.
+        SkillBridge-ийн төлбөрийн төлөвлөгөөг сонгох хуудсанд тавтай морил. Бид хоёр уян хатан сонголтыг санал болгож байна:
+        Үнэгүй болон Мэргэжлийн. Манай үйлчилгээг хялбар, боломжийн үнэтэй болгохыг зорьдог.
+        Таны хэрэгцээнд тохирсон төлөвлөгөөг доороос хайж сонгоорой.
       </p>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Contact Form -->
         <div class="space-y-4">
           <div class="grid grid-cols-2 gap-4">
+            <div>
+              <input
+                v-model="form.firstName"
+                type="text"
+                placeholder="Өөрийн нэрээ оруулна уу"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+              />
+              <p v-if="errors.firstName" class="text-red-500 text-sm mt-1">{{ errors.firstName }}</p>
+            </div>
             <input
+              v-model="form.lastName"
               type="text"
-              placeholder="Enter First Name"
-              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
-            />
-            <input
-              type="text"
-              placeholder="Enter Last Name"
+              placeholder="Өөрийн овгоо оруулна уу"
               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
           </div>
+          <div>
+            <input
+              v-model="form.email"
+              type="email"
+              placeholder="Имэйл хаягаа оруулна уу"
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+            />
+            <p v-if="errors.email" class="text-red-500 text-sm mt-1">{{ errors.email }}</p>
+          </div>
           <input
-            type="email"
-            placeholder="Enter your Email"
+            v-model="form.phone"
+            type="text"
+            placeholder="Утасны дугаараа оруулна уу"
             class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
           />
           <input
+            v-model="form.subject"
             type="text"
-            placeholder="Enter Phone Number"
-            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
-          />
-          <input
-            type="text"
-            placeholder="Enter your Subject"
+            placeholder="Сэдвээ оруулна уу"
             class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
           />
           <textarea
-            placeholder="Enter your Message here..."
+            v-model="form.message"
+            placeholder="Та мессежээ энд бичнэ үү..."
             class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
             rows="4"
           ></textarea>
           <button
+            @click="submitForm"
             class="w-full bg-amber-500 text-white py-2 rounded-md hover:bg-amber-600 transition"
           >
-            Send Your Message
+            Мессеж илгээх
           </button>
         </div>
 
@@ -93,7 +133,7 @@ definePageMeta({
                 <path d="M13 11h8v2h-8v7h-2v-7H3v-2h8V4h2v7z" />
               </svg>
             </span>
-            <span class="text-gray-700">+91 00000 00000</span>
+            <span class="text-gray-700">+976 99000000</span>
           </div>
           <div
             class="p-4 border border-gray-200 rounded-md flex items-center space-x-4"
@@ -111,40 +151,7 @@ definePageMeta({
                 />
               </svg>
             </span>
-            <span class="text-gray-700">Somewhere in the World</span>
-          </div>
-          <div class="flex space-x-4 text-gray-600">
-            <!-- Social Icons -->
-            <a href="#" class="hover:text-gray-800">
-              <svg
-                class="w-6 h-6"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <!-- Facebook icon path here -->
-              </svg>
-            </a>
-            <a href="#" class="hover:text-gray-800">
-              <svg
-                class="w-6 h-6"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <!-- Twitter icon path here -->
-              </svg>
-            </a>
-            <a href="#" class="hover:text-gray-800">
-              <svg
-                class="w-6 h-6"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <!-- LinkedIn icon path here -->
-              </svg>
-            </a>
+            <span class="text-gray-700">Монгол улс</span>
           </div>
         </div>
       </div>

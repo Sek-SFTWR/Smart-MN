@@ -1,4 +1,7 @@
 export default defineNuxtConfig({
+  app: {
+    layoutTransition: { name: 'layout', mode: 'out-in' }
+  },
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
   modules: [

@@ -1,13 +1,5 @@
 <script setup lang="ts">
-import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
+import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 import { RouterLink, useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
 
@@ -15,17 +7,23 @@ const router = useRouter();
 const status = ref("Login");
 const isAuthenticated = ref(false);
 
-const checkToken = () => {
+const checkToken = async () => {
   const token = localStorage.getItem("elearn-token");
-  isAuthenticated.value = !!token;
-  status.value = token ? "Logout" : "Login";
+  if (token) {
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    isAuthenticated.value = true;
+    status.value = "Logout";
+  } else {
+    isAuthenticated.value = false;
+    status.value = "Login";
+  }
 };
 
 onMounted(checkToken);
 
-const handleAuthAction = () => {
+const handleAuthAction = async () => {
   if (status.value === "Logout") {
-    // Logout logic
+    await new Promise((resolve) => setTimeout(resolve, 100));
     localStorage.removeItem("elearn-token");
     isAuthenticated.value = false;
     router.push("/");
@@ -43,7 +41,8 @@ const handleAuthAction = () => {
     <div
       class="flex items-center justify-center m-0 p-2 bg-amber-500 text-slate-50 mb-2 text-lg font-sans font-semibold rounded-md"
     >
-      Free Courses 🌟 Sale Ends Soon, Get It Now ->
+      Үнэгүй сургалтууд🌟 Хямдрал дуусахад цөөхөн хоног үлдлээ , Яг одоо
+      бүртгүүлээрэй 🌟
     </div>
     <Menubar class="flex justify-between items-center text-slate-900 px-6 py-6">
       <div class="flex items-center space-x-4">
@@ -51,43 +50,47 @@ const handleAuthAction = () => {
 
         <MenubarMenu>
           <RouterLink to="/">
-            <MenubarTrigger>Home</MenubarTrigger>
+            <MenubarTrigger></MenubarTrigger>
           </RouterLink>
         </MenubarMenu>
         <MenubarMenu>
           <RouterLink to="/courses">
-            <MenubarTrigger>Courses</MenubarTrigger>
+            <MenubarTrigger>Сургалт үзэх</MenubarTrigger>
           </RouterLink>
         </MenubarMenu>
         <MenubarMenu>
           <RouterLink to="/about">
-            <MenubarTrigger>About Us</MenubarTrigger>
+            <MenubarTrigger>Бидний тухай</MenubarTrigger>
           </RouterLink>
         </MenubarMenu>
         <MenubarMenu>
           <RouterLink to="/pricing">
-            <MenubarTrigger>Pricing</MenubarTrigger>
+            <MenubarTrigger>Үнийн мэдээлэл</MenubarTrigger>
           </RouterLink>
         </MenubarMenu>
         <MenubarMenu>
           <RouterLink to="/contact">
-            <MenubarTrigger>Contact</MenubarTrigger>
+            <MenubarTrigger>Холбоо барих</MenubarTrigger>
           </RouterLink>
         </MenubarMenu>
       </div>
 
       <div class="flex items-center space-x-4">
-        <!-- Conditionally render Profile if authenticated -->
+        <MenubarMenu v-if="isAuthenticated">
+          <RouterLink to="/cart">
+            <MenubarTrigger>Cart</MenubarTrigger>
+          </RouterLink>
+        </MenubarMenu>
+
         <MenubarMenu v-if="isAuthenticated">
           <RouterLink to="/profile">
             <MenubarTrigger>Profile</MenubarTrigger>
           </RouterLink>
         </MenubarMenu>
 
-        <!-- Conditionally render Sign Up if not authenticated -->
         <MenubarMenu v-if="!isAuthenticated">
           <RouterLink to="/signup">
-            <MenubarTrigger>Sign Up</MenubarTrigger>
+            <MenubarTrigger>Бүртгүүлэх</MenubarTrigger>
           </RouterLink>
         </MenubarMenu>
 

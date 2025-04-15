@@ -32,13 +32,12 @@ export default function useCourses() {
       const response = await fetch(`${apiBaseUrl}/courses`);
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch courses: ${response.statusText}`);
+        throw new Error(`Сургалтын мэдээлэл олдсонгүй : ${response.statusText}`);
       }
 
       const data = await response.json();
       courses.value = data || [];
 
-      // Fetch teacher names for each course
       for (const course of courses.value) {
         const { data: teacherData, error: teacherError } =
           await useFetch<Teacher>(`/users/${course.teacher_id}`, {
@@ -47,7 +46,7 @@ export default function useCourses() {
 
         if (teacherError.value) {
           throw new Error(
-            teacherError.value.message || "Failed to fetch teacher"
+            teacherError.value.message || "Багшын мэдээлэл олдсонгүй"
           );
         }
 

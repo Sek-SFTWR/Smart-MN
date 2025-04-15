@@ -1,5 +1,135 @@
+<script setup lang="ts">
+definePageMeta({
+  layout: "user"
+});
+import { RouterLink } from "vue-router";
+import { ref, onMounted } from "vue";
+import PptxGenJS from "pptxgenjs";
+import html2canvas from "html2canvas";
+interface Worker {
+  name: string;
+  image: string;
+  role: string;
+}
+const workers = ref<Worker[]>([]);
+onMounted(async () => {});
+const toLocal = () => {
+  const toke = "this is token right ?";
+  localStorage.setItem("tokee", toke);
+};
+const byeLocal = () => {
+  localStorage.removeItem("tokee");
+  localStorage.removeItem("elearn-token");
+};
+
+const Benefits = [
+  {
+    id: "unique",
+    title: "Уян Хатан Хуваарь",
+    desc: "Суралцагчидтай хамтран ажиллаж, санаа бодлоо солилцон ойлголтоо дээшлүүлэх."
+  },
+  {
+    id: "unique",
+    title: "Мэргэжлийн Заах Арга",
+    desc: "Өөрийн цагийн хуваарьт тохируулан суралцах боломж."
+  },
+  {
+    id: "unique",
+    title: "Олон Төрлийн Сургалт",
+    desc: "Дизайн, хөгжүүлэлтийн чиглэлээр туршлагатай мэргэжилтнүүдээс суралцах."
+  },
+  {
+    id: "uniqueasd",
+    title: "Шинэчлэгдсэн Хөтөлбөр",
+    desc: "Дизайн, хөгжүүлэлтийн олон төрлийн сэдвүүдийг хамарсан сургалтууд."
+  },
+  {
+    id: "uniquesdf",
+    title: "Практик Төслүүд",
+    desc: "Салбарын чиг хандлага, шинэ технологид нийцсэн шинэчлэгдсэн агуулга."
+  },
+  {
+    id: "uniquasde",
+    title: "Портфолио Хөгжүүлэлт",
+    desc: "Ажил олгогчдод үзүүлэх ур чадвараа харуулсан портфолио бүтээх."
+  }
+];
+const video = {
+  title: "Welcome to Our Job Finding Platform",
+  description:
+    "Discover your dream job with us. We connect talent with opportunity.",
+  url: "/videos/Waves.mp4" // Local video URL
+};
+
+const generatePptFromDiv = async () => {
+  const pptx = new PptxGenJS();
+  const slideWidth = 10; // Inches
+  const slideHeight = 5.62; // Inches (16:9)
+
+  const targetElement = document.getElementById("content-to-export");
+
+  if (!targetElement) {
+    console.error("❌ Element not found");
+    return;
+  }
+
+  // Use html2canvas to capture the whole content
+  const fullCanvas = await html2canvas(targetElement, {
+    scale: 2, // Higher scale for better quality
+    scrollY: -window.scrollY // Prevent capturing only the visible part
+  });
+
+  const imgHeightInPx = fullCanvas.height;
+  const imgWidthInPx = fullCanvas.width;
+
+  // Define pixels per inch based on slide width
+  const pxPerInch = imgWidthInPx / slideWidth;
+  const sliceHeightInPx = pxPerInch * slideHeight;
+
+  let offsetY = 0;
+  while (offsetY < imgHeightInPx) {
+    const canvasSlice = document.createElement("canvas");
+    canvasSlice.width = imgWidthInPx;
+    canvasSlice.height = Math.min(sliceHeightInPx, imgHeightInPx - offsetY);
+
+    const ctx = canvasSlice.getContext("2d");
+    if (ctx) {
+      ctx.drawImage(
+        fullCanvas,
+        0,
+        offsetY,
+        imgWidthInPx,
+        canvasSlice.height,
+        0,
+        0,
+        imgWidthInPx,
+        canvasSlice.height
+      );
+
+      const imgData = canvasSlice.toDataURL("image/png");
+
+      const slide = pptx.addSlide();
+      slide.addImage({
+        data: imgData,
+        x: 0,
+        y: 0,
+        w: slideWidth,
+        h: canvasSlice.height / pxPerInch
+      });
+    }
+
+    offsetY += sliceHeightInPx;
+  }
+
+  await pptx.writeFile("presentation-from-html.pptx");
+};
+</script>
+<style scoped>
+/* Additional styling if needed */
+</style>
+
 <template>
-  <div class="flex flex-col justify-center items-center">
+  <div class="flex flex-col justify-center items-center" id="content-to-export">
     <!-- Home Part 1: Course Price and List -->
     <div class="flex flex-col my-24 items-center justify-center">
       <div
@@ -10,28 +140,34 @@
         >
           <MdiIcon icon="mdiLightningBolt" size="24px" />
         </div>
-        <div class="text-amber-500 px-4">Unlock</div>
-        <div>Your Creative Potential</div>
+        <div class="text-amber-500 px-4">Нээ</div>
+        <div>Бүтээлч Чадвараа</div>
       </div>
       <div class="font-semibold text-3xl text-slate-800">
-        with Online Design and Development Courses.
+        Онлайн Дизайн болон Хөгжүүлэлтийн Хичээлүүдтэй.
       </div>
       <div class="text-1xl text-slate-800">
-        Learn from Industry Experts and Enhance Your Skills.
+        Салбарын Мэргэжилтнүүдээс суралц, Ур Чадвараа Дээшлүүл.
       </div>
       <div class="flex my-6 gap-4">
         <RouterLink to="/courses">
-          <Button size="lg" variant="secondary">Explore Courses</Button>
+          <Button size="lg" variant="secondary">Хичээлүүд</Button>
         </RouterLink>
         <RouterLink to="/pricing">
-          <Button size="lg" variant="default">View Pricing</Button>
+          <Button size="lg" variant="default">Үнийн Санал</Button>
         </RouterLink>
+        <button
+          @click="generatePptFromDiv"
+          class="text-sm bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-all"
+        >
+          PPTX татах
+        </button>
       </div>
     </div>
 
     <!-- All Workers Section -->
     <div class="w-full bg-gray-100 py-12">
-      <div class="text-3xl font-semibold text-center mb-8">Meet Our Team</div>
+      <div class="text-3xl font-semibold text-center mb-8">Манай Баг</div>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 p-6">
         <div
           v-for="(worker, index) in workers"
@@ -72,15 +208,15 @@
     <div class="flex flex-col w-full m-6 px-6">
       <div class="flex w-full justify-between">
         <div class="flex flex-col">
-          <div class="font-semibold font-sans text-4xl">Benefits</div>
+          <div class="font-semibold font-sans text-4xl">Давуу талууд</div>
           <div class="text-slate-900 text-sm">
-            Lorem ipsum dolor sit amet consectetur. Tempus tincidunt etiam eget
-            elit id imperdiet et. Cras eu sit dignissim lorem nibh et. Ac cum
-            eget habitasse in velit fringilla feugiat senectus in.
+            Бид таны хүссэн чанартай боловсролыг хүргэхийн төлөө ажилладаг.
+            Манай платформ нь таны хэрэгцээ шаардлагад нийцсэн шилдэг
+            шийдлүүдийг санал болгодог.
           </div>
         </div>
         <div>
-          <Button variant="secondary">View All</Button>
+          <Button variant="secondary">Бүгдийг харах</Button>
         </div>
       </div>
       <div class="grid grid-cols-3 gap-4 mt-8">
@@ -96,69 +232,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-definePageMeta({
-  layout: "user",
-});
-import { RouterLink } from "vue-router";
-import { ref, onMounted } from "vue";
-
-interface Worker {
-  name: string;
-  image: string;
-  role: string;
-}
-const workers = ref<Worker[]>([]);
-onMounted(async () => {});
-const toLocal = () => {
-  const toke = "this is token right ?";
-  localStorage.setItem("tokee", toke);
-};
-const byeLocal = () => {
-  localStorage.removeItem("tokee");
-  localStorage.removeItem("elearn-token");
-};
-
-const Benefits = [
-  {
-    id: "unique",
-    title: "Flexible Learning Schedule",
-    desc: "Collaborate with fellow learners, exchanging ideas and feedback to enhance your understanding.",
-  },
-  {
-    id: "unique",
-    title: "Expert Instruction",
-    desc: "Fit your coursework around your existing commitments and obligations.",
-  },
-  {
-    id: "unique",
-    title: "Diverse Course Offerings",
-    desc: "Learn from industry experts who have hands-on experience in design and development.",
-  },
-  {
-    id: "uniqueasd",
-    title: "Updated Curriculum",
-    desc: "Explore a wide range of design and development courses covering various topics.",
-  },
-  {
-    id: "uniquesdf",
-    title: "Practical Projects and Assignments",
-    desc: "Access courses with up-to-date content reflecting the latest trends and industry practices.",
-  },
-  {
-    id: "uniquasde",
-    title: "Portfolio Development",
-    desc: "Develop a portfolio showcasing your skills and abilities to potential employers.",
-  },
-];
-const video = {
-  title: "Welcome to Our Job Finding Platform",
-  description:
-    "Discover your dream job with us. We connect talent with opportunity.",
-  url: "/videos/Waves.mp4", // Local video URL
-};
-</script>
-<style scoped>
-/* Additional styling if needed */
-</style>

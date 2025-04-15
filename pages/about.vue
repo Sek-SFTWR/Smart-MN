@@ -8,12 +8,9 @@ definePageMeta({
   <div class="container mx-auto p-8 lg:p-16">
     <!-- Introduction Section -->
     <section class="space-y-4 text-center mb-12 lg:mb-16">
-      <h1 class="text-4xl font-bold text-gray-900">About Skillbridge</h1>
+      <h1 class="text-4xl font-bold text-gray-900">MATHMIND-ийн тухай</h1>
       <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-        Welcome to our platform, where we are passionate about empowering
-        individuals to master the world of design and development. We offer a
-        wide range of online courses designed to equip learners with the skills
-        and knowledge needed to succeed in the ever-evolving digital landscape.
+        Манай платформд тавтай морилно уу. Бид хувь хүмүүсийг дизайн болон хөгжүүлэлтийн ертөнцөд амжилт гаргахад нь туслахад чин сэтгэлээсээ ханддаг. Бид онлайн сургалтуудын өргөн хүрээг санал болгож, суралцагчдыг өөрчлөгдөж буй дижитал орчинд амжилт гаргахад шаардлагатай ур чадвар, мэдлэгээр хангадаг.
       </p>
     </section>
 
@@ -22,11 +19,10 @@ definePageMeta({
       <h2
         class="text-2xl font-semibold text-gray-900 text-center mb-8 lg:mb-12"
       >
-        Achievements
+        Амжилтууд
       </h2>
       <p class="text-center text-gray-600 mb-8 lg:mb-12">
-        Our commitment to excellence has led us to achieve significant
-        milestones along our journey. Here are some of our notable achievements.
+        Манай шилдэг байдлыг эрхэмлэн зорьсноор бидний замналд чухал амжилтуудыг бүтээсэн. Энд бидний зарим онцлох амжилтуудыг үзүүлж байна.
       </p>
       <div
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12"
@@ -39,11 +35,10 @@ definePageMeta({
             <span class="text-4xl">🏆</span>
           </div>
           <h3 class="text-lg font-semibold text-gray-800">
-            Trusted by Thousands
+            Мянга мянган хэрэглэгчдийн итгэл
           </h3>
           <p class="text-gray-600">
-            We are proud to have earned the trust of thousands of learners
-            worldwide.
+            Бид дэлхийн өнцөг булан бүрт байгаа мянга мянган суралцагчдын итгэлийг олж авсандаа бахархдаг.
           </p>
         </div>
         <div
@@ -54,11 +49,10 @@ definePageMeta({
             <span class="text-4xl">📚</span>
           </div>
           <h3 class="text-lg font-semibold text-gray-800">
-            Comprehensive Courses
+            Цогц сургалтууд
           </h3>
           <p class="text-gray-600">
-            Our courses cover a wide range of topics to help you stay ahead in
-            the digital world.
+            Бидний сургалтууд нь өргөн хүрээний сэдвийг хамарч, дижитал орчинд тэргүүлэгч байхыг тань дэмжинэ.
           </p>
         </div>
         <div
@@ -69,11 +63,10 @@ definePageMeta({
             <span class="text-4xl">🌟</span>
           </div>
           <h3 class="text-lg font-semibold text-gray-800">
-            High-Quality Content
+            Өндөр чанартай контент
           </h3>
           <p class="text-gray-600">
-            We ensure that our content is of the highest quality, created by
-            industry experts.
+            Бидний контент нь салбарын мэргэжилтнүүдийн бүтээсэн, хамгийн өндөр чанартай байхыг хангадаг.
           </p>
         </div>
       </div>

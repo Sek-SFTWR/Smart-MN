@@ -17,36 +17,34 @@
           </div>
           <div class="flex gap-2">
             <MdiIcon icon="mdiEmailCheckOutline" size="24px" />
-            <div>hello@skillbridge.com</div>
+            <div>Seksergelen470@gmail.com</div>
           </div>
           <div class="flex gap-2">
             <MdiIcon icon="mdiPhone" size="24px" />
-            <div>+997 94231883</div>
+            <div>+976 94231883</div>
           </div>
           <div class="flex gap-2">
             <MdiIcon icon="mdiMapMarker" size="24px" />
             <div>
-              South Korea, Seoul, Gangnam District, 대치2동 Yeongdong-daero, 417
-              B2
+              Манлай Баатар Дамдинсүрэнгийн Гудамж 45 Apartment 45, BZD - 25 khoroo, Ulaanbaatar 13372
             </div>
           </div>
         </div>
 
         <!-- Links: Home Section -->
         <div class="flex flex-col text-slate-600">
-          <div class="font-bold text-black">Home</div>
-          <div>Benefits</div>
-          <div>Our Courses</div>
-          <div>Our Testimonials</div>
-          <div>Our FAQ</div>
+          <div class="font-bold text-black">Үндсэн</div>
+          <div>Боломжууд</div>
+          <div>Сургалтууд</div>
+          <div>Хамгийн түгээмэл асуултууд</div>
         </div>
 
         <!-- Links: About Us Section -->
         <div class="flex flex-col text-slate-600">
-          <div class="font-bold text-black">About us</div>
-          <div>Company</div>
-          <div>Achievements</div>
-          <div>Our Goals</div>
+          <div class="font-bold text-black">Бидний тухай</div>
+          <div>Компани</div>
+          <div>Бидний амжилт</div>
+          <div>Хүрэх зорилго</div>
         </div>
       </div>
 

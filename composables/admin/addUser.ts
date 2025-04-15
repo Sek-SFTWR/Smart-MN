@@ -39,10 +39,10 @@ export default function useAddUser() {
       );
 
       if (error.value) {
-        throw new Error(error.value.message || "Add user failed");
+        throw new Error(error.value.message || "Aлдаа гарлаа!");
       }
 
-      successMessage.value = data.value?.message || "User added successfully!";
+      successMessage.value = data.value?.message || "Амжилттай нэмэгдлээ!";
     } catch (error) {
       errorMessage.value = (error as Error).message;
     } finally {

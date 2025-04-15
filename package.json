@@ -10,21 +10,29 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxtjs/color-mode": "^3.5.2",
     "@pinia/nuxt": "^0.6.1",
+    "@tanstack/vue-table": "^8.20.5",
     "@vue-api/core": "^2.0.0",
     "@vue-api/nuxt": "^2.0.3",
     "@vueuse/core": "^11.2.0",
-    "class-variance-authority": "^0.7.0",
+    "axios": "^1.8.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "composition-api": "^0.0.0",
+    "html2canvas": "^1.4.1",
+    "html2pptxgenjs": "^0.0.3",
     "jwt-decode": "^4.0.0",
     "lucide-vue-next": "^0.453.0",
     "nuxt": "^3.13.2",
     "nuxt-mdi": "^2.1.1",
     "pinia": "^2.2.5",
+    "pptxgenjs": "^3.12.0",
     "radix-ui": "^1.0.1",
-    "radix-vue": "^1.9.9",
-    "shadcn-nuxt": "^0.10.4",
-    "tailwind-merge": "^2.5.4",
+    "radix-vue": "^1.9.11",
+    "shadcn-nuxt": "^0.11.3",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss-animate": "^1.0.7",
     "vaul-vue": "^0.2.0",
     "vue": "latest",
     "vue-router": "latest",
@@ -34,6 +42,6 @@
     "@nuxtjs/tailwindcss": "^6.12.2",
     "@types/jwt-decode": "^2.2.1",
     "my-module": "^1.0.0",
-    "typescript": "^5.6.3"
+    "typescript": "^5.7.2"
   }
 }
